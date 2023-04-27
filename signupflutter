@@ -1,210 +1,153 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hu_flutter/modules/demo_counter_module/screens/first_page.dart';
+import 'package:hu_flutter/modules/demo_counter_module/screens/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
-import 'login_page.dart';
-
-class SignUpPage extends StatefulWidget {
-  SignUpPage({super.key});
+class ProfilePage extends StatefulWidget {
+  ProfilePage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _ProfilePageState extends State<ProfilePage> {
   bool isChecked = false;
   bool showPassword = false;
   bool showConfPassword = false;
   var confpass;
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-          child: Column(children: [
-        const SizedBox(height: 50),
-
-        Align(
-          alignment: Alignment(-0.8, 0.3),
-          child: Text(
-            "Hello",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-            // textAlign: TextAlign.left,
-          ),
-        ),
-        Align(
-          alignment: Alignment(-0.8, 0.3),
-          child: Text(
-            "Signup!",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
-                color: Color.fromARGB(223, 33, 110, 210)),
-            // textAlign: TextAlign.left,
-          ),
-        ),
-
-        // welcome back, you've been missed!
-        Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
-          child: Align(
-            alignment: Alignment(-0.7, 0.3),
-            child: SizedBox(
-              // width: 200,
-              child: Text(
-                'Create your new account!',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 20,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-          ),
-        ),
-        Form(
-            autovalidateMode: AutovalidateMode.always,
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: "Full name",
-                      labelText: "Full name",
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter email';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                      labelText: "Email",
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: TextFormField(
-                    validator: (value) {
-                      confpass = value;
-                      print(confpass);
-                      if (value == null || value.isEmpty)
-                        return 'Enter Password';
-                      else if (value.length < 6)
-                        return 'Password must be of at least 6 characters';
-                      return null;
-                    },
-                    obscureText: showPassword ? false : true,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      labelText: "Password",
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                      border: OutlineInputBorder(),
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                        child: Icon(
-                          showPassword
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty)
-                        return 'Enter Password';
-                      if (value != confpass)
-                        return 'Passwords are not matching';
-                      return null;
-                    },
-                    obscureText: showConfPassword ? false : true,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: "Re-enter Password",
-                      labelText: "Confirm Password",
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                      border: OutlineInputBorder(),
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          setState(() {
-                            showConfPassword = !showConfPassword;
-                          });
-                        },
-                        child: Icon(
-                          showConfPassword
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                    height: 50,
-                    width: 350,
-                    //padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: ElevatedButton(
-                      child: const Text('SignUp'),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          print("ERROR");
-                        }
-                      },
-                    ))
-              ],
-            )),
-        SizedBox(height: 20),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-            );
-          },
-          child: Container(
+      backgroundColor: Color(0xfff7f7f7),
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Column(children: [
+          const SizedBox(height: 50),
+          Align(
+            alignment: Alignment(-0.8, 0.3),
             child: Text(
-              "Already have an account? Login",
-              style: TextStyle(color: Colors.grey),
+              "Profile",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              // textAlign: TextAlign.left,
             ),
           ),
-        ),
-      ])),
+          Padding(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Image.asset('assets/profile_placeholder.png')),
+          Text(
+            'David',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(30, 100, 30, 0),
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(children: [
+                                  Icon(FontAwesomeIcons.bell),
+                                  Text(
+                                    "  Notification",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ]),
+                              ),
+                              Icon(FontAwesomeIcons.angleRight)
+                            ])),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(children: [
+                                  Icon(FontAwesomeIcons.lock),
+                                  Text(
+                                    "  Security & Privacy",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ]),
+                              ),
+                              Icon(FontAwesomeIcons.angleRight)
+                            ])),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(children: [
+                                  Icon(FontAwesomeIcons.pen),
+                                  Text(
+                                    "  Terms & Conditions",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ]),
+                              ),
+                              Icon(FontAwesomeIcons.angleRight)
+                            ])),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(children: [
+                                  Icon(FontAwesomeIcons.questionCircle),
+                                  Text(
+                                    "  Help",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ]),
+                              ),
+                              Icon(FontAwesomeIcons.angleRight)
+                            ])),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(children: [
+                                  Icon(FontAwesomeIcons.commentDots),
+                                  Text(
+                                    "  FAQs",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ]),
+                              ),
+                              Icon(FontAwesomeIcons.angleRight)
+                            ])),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: Container(
+                            height: 50,
+                            width: 400,
+                            //padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: ElevatedButton(
+                              child: const Text('Logout'),
+                              onPressed: () async {
+                                final SharedPreferences sharedPreferences =
+                                    await SharedPreferences.getInstance();
+                                sharedPreferences.remove('username');
+                                Get.to(LoginPage());
+                              },
+                            )))
+                  ]),
+            ),
+          ),
+        ])),
+      ),
     );
   }
 }
